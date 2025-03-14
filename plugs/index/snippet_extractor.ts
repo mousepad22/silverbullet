@@ -13,7 +13,9 @@ export function extractSnippetAroundIndex(
   // Manual fixes for markdown notation
   const tempSentences: string[] = [];
   for (let i = 0; i < sentences.length; i++) {
-    if (sentences[i] === "[[!" && sentences[i + 1]) {
+    if (
+      (sentences[i] === "[[!" || sentences[i] === "![[") && sentences[i + 1]
+    ) {
       tempSentences.push(sentences[i] + sentences[i + 1]);
       i++;
     } else {
@@ -39,6 +41,11 @@ export function extractSnippetAroundIndex(
   }
 
   const indexInSentence = index - currentLength;
+
+  // Check if the sentence contains markdown image link or embed syntax and return full sentence if it does
+  if (targetSentence.includes("![[") || targetSentence.includes("[[!")) {
+    return "..." + targetSentence.trim() + "...";
+  }
 
   // Regex for checking if a character is a word character with unicode support
   const isWordCharacter = /[\p{L}\p{N}_]/u;
