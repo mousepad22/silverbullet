@@ -134,6 +134,10 @@ export function relativeToAbsolutePath(page: string, linkTo: string): string {
   page = page.startsWith("/") ? page.slice(1) : page;
   linkTo = linkTo.startsWith("/") ? linkTo.slice(1) : linkTo;
 
+  // Remove leading ./
+  page = page.startsWith("./") ? page.slice(2) : page;
+  linkTo = linkTo.startsWith("./") ? linkTo.slice(2) : linkTo;
+
   const splitPage = page.split("/").slice(0, -1);
 
   const splitLink = linkTo.split("/");

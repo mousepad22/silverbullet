@@ -90,6 +90,11 @@ export function parseRef(name: string): Ref {
     pageRef.page = pageRef.page.replace(headerRegex, "");
   }
 
+  // starts with ./
+  if (pageRef.page.startsWith("./")) {
+    pageRef.page = pageRef.page.slice(2);
+  }
+
   return pageRef;
 }
 
